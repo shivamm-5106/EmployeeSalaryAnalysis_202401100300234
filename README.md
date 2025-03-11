@@ -1,56 +1,54 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+# Employee Salary Analysis
 
-# Load dataset
-df = pd.read_csv("employee_data.csv")
+## Overview
+This project analyzes employee salary data using Python, providing insights into salary distribution, outliers, and correlations with other factors such as department, experience, and job role. The analysis includes data visualization and outlier detection to better understand salary trends.
 
-# Display first few rows
-print("First 5 rows:")
-print(df.head())
+## Features
+- Load and explore the dataset
+- Handle missing values
+- Encode categorical variables
+- Visualize salary distribution
+- Detect salary outliers using boxplots and IQR method
+- Compute correlation matrix including categorical data
 
-# Check for missing values
-print("\nMissing values:")
-print(df.isnull().sum())
+## Technologies Used
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
 
-# Drop rows with missing salary values
-df = df.dropna(subset=['Salary'])
+## Setup Instructions
+1. Clone the repository or download the script.
+2. Install required dependencies:
+   ```bash
+   pip install pandas numpy matplotlib seaborn
+   ```
+3. Place your dataset file (`employee_data.csv`) in the same directory as the script.
+4. Run the script using:
+   ```bash
+   python employee_salary_analysis.py
+   ```
 
-# Convert categorical columns to numeric (if any)
-categorical_cols = df.select_dtypes(include=['object']).columns
-for col in categorical_cols:
-    df[col] = df[col].astype('category').cat.codes
+## Data Requirements
+The dataset should be a CSV file with the following columns:
+- **Employee ID** (optional)
+- **Department** (categorical)
+- **Experience** (numerical)
+- **Job Title** (categorical)
+- **Salary** (numerical)
 
-# Summary statistics
-print("\nSummary statistics:")
-print(df.describe())
+## Results & Insights
+- The salary distribution provides an overview of how salaries are spread across employees.
+- Outlier detection helps identify unusually high or low salaries.
+- The correlation matrix helps understand the relationship between salary and other factors.
 
-# Salary distribution
-plt.figure(figsize=(8, 5))
-sns.histplot(df['Salary'], bins=30, kde=True, color='blue')
-plt.title("Salary Distribution")
-plt.xlabel("Salary")
-plt.ylabel("Frequency")
-plt.show()
+## License
+This project is open-source and free to use for research and analysis purposes.
 
-# Boxplot to detect outliers
-plt.figure(figsize=(8, 5))
-sns.boxplot(x=df['Salary'], color='red')
-plt.title("Salary Outliers")
-plt.show()
+## Contributing
+Feel free to fork the repository and submit pull requests for improvements or additional features.
 
-# Detect outliers using IQR method
-Q1 = df['Salary'].quantile(0.25)
-Q3 = df['Salary'].quantile(0.75)
-IQR = Q3 - Q1
-outliers = df[(df['Salary'] < (Q1 - 1.5 * IQR)) | (df['Salary'] > (Q3 + 1.5 * IQR))]
-print(f"\nNumber of outliers: {len(outliers)}")
-
-# Correlation matrix with encoded categorical variables
-plt.figure(figsize=(10, 6))
-sns.heatmap(df.corr(), annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
-plt.title("Correlation Matrix")
-plt.show()
-
+## Contact
+For questions or suggestions, please reach out to the project maintainer.
 
